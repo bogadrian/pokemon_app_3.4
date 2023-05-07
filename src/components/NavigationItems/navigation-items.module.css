@@ -1,0 +1,18 @@
+.items {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  list-style: none;
+  font-size: 20px;
+  width: fit-content;
+}
+
+.item:not(:first-child) {
+  margin-left: 20px;
+}
+
+.item:hover {
+  color: rgb(131, 86, 86);
+  cursor: pointer;
+}

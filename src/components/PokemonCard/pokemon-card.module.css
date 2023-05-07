@@ -1,0 +1,38 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  min-width: 400px;
+  width: fit-content;
+  min-height: 450px;
+  border: 1px solid rgb(106, 78, 78);
+  position: relative;
+}
+
+@media screen and (max-width: 1900px) {
+  .card {
+    width: 100%;
+  }
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0 20px 0px;
+  color: rgb(106, 78, 78);
+  text-align: center;
+}
+
+.span {
+  color: rgb(109, 9, 9);
+}
+
+.link {
+  margin-top: 20px;
+  color: rgb(106, 78, 78);
+}
+
+.link:hover {
+  color: rgb(109, 9, 9);
+}

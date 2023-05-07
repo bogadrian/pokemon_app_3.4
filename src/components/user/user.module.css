@@ -1,0 +1,33 @@
+.log_in {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: aqua;
+  color: black;
+  font-size: 30px;
+  position: relative;
+  margin-top: -30px;
+  cursor: pointer;
+}
+
+.log_out {
+  font-size: 30px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.logout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+  position: absolute;
+  width: 200px;
+  height: 100px;
+  background-color: rgb(48, 58, 58);
+  font-size: 30px;
+  cursor: pointer;
+}

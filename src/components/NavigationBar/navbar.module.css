@@ -1,0 +1,15 @@
+.nav {
+  height: 70px;
+  width: 100vw;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background: rgba(83, 81, 81, 0.11);
+  border: 1px solid rgb(83, 81, 81);
+  border-radius: 5px;
+  box-shadow: 1px 0px 0px rgb(91, 81, 81);
+  position: sticky;
+  top: 0;
+  padding: 0 20px 0 20px;
+  z-index: 100;
+}

@@ -1,0 +1,24 @@
+.container {
+  width: 500px;
+  height: 50px;
+  background-color: rgba(142, 82, 82, 0.232);
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  position: sticky;
+}
+
+.input {
+  background-color: rgba(156, 94, 94, 0.097);
+  background-image: url('/assets/search.png');
+  background-size: 20px;
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  padding-left: 40px;
+  border-radius: 5px;
+  width: 98%;
+  height: 80%;
+  border: 0;
+}
