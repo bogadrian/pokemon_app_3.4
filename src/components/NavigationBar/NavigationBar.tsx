@@ -19,7 +19,7 @@ export const NavigationBar = () => {
       <div style={{ width: '30%', marginLeft: '20px' }}>
         <NavigationItems />
       </div>
-      <div style={{ width: '60%', marginLeft: '20px' }}>
+      <div style={{ width: '60%', marginLeft: '200px' }}>
         <SearchPokemon />
       </div>
       <div

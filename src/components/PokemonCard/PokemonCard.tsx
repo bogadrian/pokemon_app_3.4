@@ -24,7 +24,7 @@ export const PokemonCard = ({ pokemon, lastIndex, index }: Props) => {
       <div
         className={styles.card}
         id={index === lastIndex - 15 ? `card-${lastIndex - 15}` : ''}
-        style={{ backgroundColor: index === lastIndex - 15 ? 'red' : 'blue' }}
+        // style={{ backgroundColor: index === lastIndex - 15 ? 'red' : 'blue' }}
       >
         <h1 className={styles.title}>
           <span>Pokemon name</span>

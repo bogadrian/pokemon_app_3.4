@@ -8,12 +8,11 @@ export const User = () => {
   const { user, dispatch } = useContext(AuthContext);
   const [open, setOpen] = useState(false);
   const { push, refresh } = useRouter();
-  console.log({ user });
 
   const logout = async () => {
     const response = await fetch('/api/logout');
     const res = await response.json();
-    console.log('resss', res);
+
     if (res.message === 'ok') {
       dispatch({ type: 'LOGOUT' });
       refresh();

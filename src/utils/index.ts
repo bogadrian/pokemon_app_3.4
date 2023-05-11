@@ -1,5 +1,4 @@
-import { RequestCookie } from 'next/dist/compiled/@edge-runtime/cookies';
-import { Pokemons, Pokemon } from '../types/pokemons';
+import { Pokemon } from '../types/pokemons';
 
 // get random pokemon name by calling the pokemon api with a random offset (pages form min to max, where min is for ex 50 and max is 70)
 export const randomIntFromInterval = (min: number, max: number) => {
