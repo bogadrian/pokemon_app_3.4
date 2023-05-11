@@ -177,7 +177,7 @@ const PokemonsWrapper = async ({
 
   // get the next link here form the response and pass it down to the client component that fires the next request
   const nextLink = list.next;
-  console.log({ offset, nextLink });
+
   // this is called 2 times simetimes, probably because React 18 strict more
   setPokemons({
     pokemons: list.results,
