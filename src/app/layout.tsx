@@ -3,9 +3,7 @@ import { Inter } from 'next/font/google';
 
 import { NavigationBar } from '../components/NavigationBar';
 import { AuthProvider } from '@/components/auth/AuthContext';
-import { cookies } from 'next/headers';
-
-import { clearStore } from '../utils';
+import { SetCookie } from '@/components/setCookie';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -19,12 +17,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const cookieStore = cookies();
-
-  const sessionId = cookieStore.get('serverSessionId');
-
-  if (sessionId) clearStore(sessionId?.value);
-
   return (
     <html lang="en">
       <body className={inter.className}>
@@ -36,6 +28,7 @@ export default function RootLayout({
             <div style={{ marginTop: '-100px' }}>{children}</div>
           </div>
         </AuthProvider>
+        <SetCookie />
       </body>
     </html>
   );

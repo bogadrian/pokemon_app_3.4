@@ -46,9 +46,8 @@ export async function POST(request: Request) {
   const response = NextResponse.json({ message: 'ko', user: null });
   response.cookies.set({
     name: 'token',
-    value: '',
-    httpOnly: true,
-    maxAge: 60 * 60
+    value: ''
+    // httpOnly: true
   });
 
   return response;

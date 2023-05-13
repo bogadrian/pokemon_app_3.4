@@ -7,7 +7,8 @@ export const randomIntFromInterval = (min: number, max: number) => {
 
 const pokemonsStore = () => {
   const pokemonsList: { [sessionId: string]: Pokemon[] } = { sessionId: [] };
-  const pokemonsResponses: {
+
+  const pokemonsResponse: {
     [sessionId: string]: { results: Pokemon[] };
   } = {
     sessionId: {
@@ -29,13 +30,31 @@ const pokemonsStore = () => {
 
     if (!!sessionId && Array.isArray(pokemonsList[sessionId])) {
       // filter the pokemons arrived out form pokemonsList[sessionId]
-      const newPokemons = pokemons.filter(pokemon => {
-        return pokemonsList[sessionId].map(pok => pok.name !== pokemon.name);
+      if (pokemonsList[sessionId].length === 0) {
+        pokemonsList[sessionId] = [...pokemons];
+      }
+
+      if (pokemonsList[sessionId].length > 0) {
+        const listPokemons = pokemonsList[sessionId].map(p => p.name);
+
+        pokemons.forEach(pok => {
+          if (!listPokemons.includes(pok.name)) {
+            pokemonsList[sessionId].push(pok);
+          }
+        });
+      }
+      pokemonsList[sessionId].sort((a, b) => {
+        if (a.name < b.name) {
+          return -1;
+        }
+        if (a.name > b.name) {
+          return 1;
+        }
+        return 0;
       });
-      //push the newPokemons in the local pokemons
-      pokemonsList[sessionId].push(...newPokemons);
-      // set the pokemonsResponses to the local list of pokemons
-      pokemonsResponses[sessionId] = {
+
+      // // set the pokemonsResponses to the local list of pokemons
+      pokemonsResponse[sessionId] = {
         results: pokemonsList[sessionId]
       };
     }
@@ -49,37 +68,23 @@ const pokemonsStore = () => {
     sessionId: string | undefined;
   }): Promise<{ results: Pokemon[] }> => {
     return new Promise(resolve => {
-      if (sessionId)
-        if (!searchQuery) {
-          // if no search query resolve with all the local list
-          resolve(pokemonsResponses[sessionId]);
-        } else {
-          // if search quesry resolve with filtred pokemons form local list based on that query
-          const pokemonsFiltered = pokemonsResponses[sessionId].results.filter(
-            pok => {
-              return pok.name.includes(searchQuery);
-            }
-          );
+      if (sessionId) {
+        // if no search query resolve with all the local list
+        const response = {
+          ...pokemonsResponse[sessionId],
+          results: !!searchQuery
+            ? pokemonsList[sessionId].filter(pok => {
+                return pok.name.includes(searchQuery);
+              })
+            : pokemonsList[sessionId]
+        };
 
-          // construct the response out of filtered pokemons
-          const response = {
-            ...pokemonsResponses[sessionId],
-            results: pokemonsFiltered
-          };
-          resolve(response);
-        }
+        resolve(response);
+      }
     });
   };
 
-  const clearStore = (sessionId: string | undefined) => {
-    // set local pokemons list to length 0 and rsults to empty array when cleaning the store
-    if (sessionId && Array.isArray(pokemonsList[sessionId])) {
-      pokemonsList[sessionId].length = 0;
-      pokemonsResponses[sessionId] = { results: [] };
-    }
-  };
-
-  return { setPokemons, getPokemonsList, clearStore };
+  return { setPokemons, getPokemonsList };
 };
 
-export const { setPokemons, getPokemonsList, clearStore } = pokemonsStore();
+export const { setPokemons, getPokemonsList } = pokemonsStore();

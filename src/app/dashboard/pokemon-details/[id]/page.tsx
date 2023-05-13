@@ -60,8 +60,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const id = params.id;
 
   // get pokemon
-  const pokemon = await getPokemonDetails({ id });
-  const description = await getPokemonDescription({ id });
+  const pokemonData = getPokemonDetails({ id });
+  const descriptionData = getPokemonDescription({ id });
+
+  // parallel data fetching
+  const [pokemon, description] = await Promise.all([
+    pokemonData,
+    descriptionData
+  ]);
 
   return {
     title: pokemon.name,
@@ -79,9 +85,9 @@ const PokemonDetails = async ({
 }: {
   params: { id: string };
   // navigate back to the path in searchParams
-  searchParams: { backTo: '/pokemons' | '/' };
+  searchParams: { backTo: '/dashboard/pokemons' | '/' };
 }) => {
-  // sequentials api calls
+  console.log({ id, backTo });
   const pokemonData = getPokemonDetails({ id });
   const descriptionData = getPokemonDescription({ id });
   const imageData: string | unknown = getPokemonImage({ id });

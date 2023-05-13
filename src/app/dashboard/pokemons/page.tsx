@@ -1,8 +1,9 @@
+import 'server-only';
+
 import { ListComponentTransparentDown } from '@/components/auth/ListComponentTransparent';
 import { cookies } from 'next/headers';
 import Image from 'next/image';
 import { cache } from 'react';
-import 'server-only';
 import { PokemonCard } from '@/components/PokemonCard';
 import { Pokemon, Pokemons } from '../../../types/pokemons';
 import {
@@ -21,7 +22,7 @@ import style from './pokemons.module.css';
  */
 
 const getPokemons = async ({
-  offset = '0'
+  offset
 }: {
   offset: string;
 }): Promise<Pokemons> => {
@@ -163,14 +164,22 @@ const Pokemons = async ({
   );
 };
 
+const getSessionId = async (): Promise<string> => {
+  return new Promise(resolve => {
+    const cookieStore = cookies();
+
+    const sessionId = cookieStore.get('serverSessionId');
+    if (sessionId) resolve(sessionId.value);
+  });
+};
+
 const PokemonsWrapper = async ({
   searchParams: { offset, searchQuery }
 }: {
   searchParams: { offset: string; searchQuery: string };
 }) => {
-  const cookieStore = cookies();
+  const sessionId = await getSessionId();
 
-  const sessionId = cookieStore.get('serverSessionId');
   const list = await getPokemons({
     offset
   });
@@ -179,15 +188,16 @@ const PokemonsWrapper = async ({
   const nextLink = list.next;
 
   // this is called 2 times simetimes, probably because React 18 strict more
-  setPokemons({
+
+  await setPokemons({
     pokemons: list.results,
-    sessionId: sessionId?.value
+    sessionId: sessionId
   });
 
   return (
     <>
       {/* @ts-expect-error Async Server Component */}
-      {list && <Pokemons searchQuery={searchQuery} nextLink={nextLink} />}
+      <Pokemons searchQuery={searchQuery} nextLink={nextLink} />
     </>
   );
 };

@@ -1,4 +1,6 @@
 'use client';
+
+import { getCookie, setCookie } from 'cookies-next';
 import styles from './user.module.css';
 import { useContext, useState } from 'react';
 import { AuthContext } from '@/components/auth/AuthContext';
@@ -8,6 +10,8 @@ export const User = () => {
   const { user, dispatch } = useContext(AuthContext);
   const [open, setOpen] = useState(false);
   const { push, refresh } = useRouter();
+
+  const serverSessionId = getCookie('serverSessionId');
 
   const logout = async () => {
     const response = await fetch('/api/logout');
@@ -19,6 +23,7 @@ export const User = () => {
       setOpen(false);
       push('/auth');
     }
+    if (!!serverSessionId) setCookie('serverSessionId', '');
   };
   return (
     <>

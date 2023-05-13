@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useReducer, Dispatch } from 'react';
+import { createContext, useReducer, Dispatch, useState } from 'react';
 
 interface User {
   name: string | null;
@@ -57,7 +57,6 @@ const reducer = (state: User = initialState, action: Actions) => {
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, dispatch] = useReducer(reducer, initialState);
 
-  console.log({ user });
   return (
     <AuthContext.Provider value={{ user, dispatch }}>
       {children}

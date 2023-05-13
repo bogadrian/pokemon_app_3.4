@@ -12,7 +12,7 @@ export const ListComponentTransparentDown = ({
   lastIndex: number;
   nextLink: string;
 }) => {
-  const { replace } = useRouter();
+  const { replace, refresh } = useRouter();
   const searchParams = useSearchParams();
   const { ref, inView } = useInView({ threshold: 1 });
   const pathname = usePathname();
@@ -20,15 +20,16 @@ export const ListComponentTransparentDown = ({
 
   useEffect(() => {
     const params = nextLink.split('?')[1].split('&')[0];
+
+    const offset = nextLink.split('?')[1].split('&')[0].split('=')[1];
+
     if (inView && !search && pathname === '/dashboard/pokemons') {
       replace(`/dashboard/pokemons?${params}`);
     }
 
     const card = document.getElementById(`card-${lastIndex - 15}`);
 
-    const offset = nextLink.split('?')[1].split('&')[0].split('=')[1];
-
-    if (offset && Number(offset) > 18) card?.scrollIntoView(false);
+    !search && offset && Number(offset) > 17 && card?.scrollIntoView(false);
   }, [inView, pathname, lastIndex, nextLink]);
 
   return (
