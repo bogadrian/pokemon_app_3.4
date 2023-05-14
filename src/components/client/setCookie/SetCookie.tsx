@@ -1,4 +1,5 @@
 'use client';
+
 import { setCookie } from 'cookies-next';
 import { v4 } from 'uuid';
 

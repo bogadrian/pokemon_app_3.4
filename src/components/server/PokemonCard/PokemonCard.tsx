@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 import styles from './pokemon-card.module.css';
 
-import { Pokemon } from '../../types/pokemons';
+import { Pokemon } from '../../../types/pokemons';
 
 interface Props {
   pokemon: Omit<Pokemon, 'url'>;

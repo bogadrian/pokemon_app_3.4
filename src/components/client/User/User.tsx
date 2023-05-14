@@ -1,10 +1,10 @@
 'use client';
 
+import { AuthContext } from '@/components/client/auth/AuthContext';
 import { getCookie, setCookie } from 'cookies-next';
-import styles from './user.module.css';
-import { useContext, useState } from 'react';
-import { AuthContext } from '@/components/auth/AuthContext';
 import { useRouter } from 'next/navigation';
+import { useContext, useState } from 'react';
+import styles from './user.module.css';
 
 export const User = () => {
   const { user, dispatch } = useContext(AuthContext);

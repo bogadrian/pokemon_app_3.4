@@ -1,6 +1,7 @@
 import rootStyles from '../page.module.css';
 import styles from './auth.module.css';
-import { FormComponent, GifComponent, CountComponent } from '@/components/auth';
+import { FormComponent, CountComponent } from '@/components/client/auth';
+import { GifComponent } from '@/components/server/GifComponent';
 
 const Login = () => {
   return (

@@ -1,10 +1,10 @@
 import 'server-only';
 
-import { ListComponentTransparentDown } from '@/components/auth/ListComponentTransparent';
+import { ListComponentTransparentDown } from '@/components/client/ListComponentTransparent';
+import { PokemonCard } from '@/components/server/PokemonCard';
 import { cookies } from 'next/headers';
 import Image from 'next/image';
 import { cache } from 'react';
-import { PokemonCard } from '@/components/PokemonCard';
 import { Pokemon, Pokemons } from '../../../types/pokemons';
 import {
   getPokemonsList,
@@ -53,11 +53,11 @@ const getPokemonImage = cache(
 
 // get the images for each URL fetched here, so I get a final list of pokemons included images
 const addImageToPokemon = cache(
-  async (pokemons: { results: Pokemon[] }): Promise<Omit<Pokemon, 'url'>[]> => {
+  async (pokemons: Pokemon[]): Promise<Omit<Pokemon, 'url'>[]> => {
     // return an array of solved Promises when all the map finishes and none fails
     return Promise.all(
       // returns an array of unresolved promises becuase of async in map, so I have to Promise.all on that array
-      pokemons.results.map(async (pokemon: Pokemon) => {
+      pokemons.map(async (pokemon: Pokemon) => {
         // get the pokemon id form url property, avoid calling other api for the id
         const currentPokemon = pokemon.url.split('/');
         const id = currentPokemon[currentPokemon.length - 2];
@@ -92,7 +92,7 @@ const Pokemons = async ({
   const pokemonWithImageAndId = await addImageToPokemon(pokemonsResponse);
   console.timeEnd('init');
 
-  const isArrayNotEmpty = pokemonsResponse.results.length > 0;
+  const isArrayNotEmpty = pokemonsResponse.length > 0;
 
   return (
     <>
@@ -103,10 +103,7 @@ const Pokemons = async ({
               <Image
                 src={
                   pokemonWithImageAndId[
-                    randomIntFromInterval(
-                      0,
-                      pokemonsResponse.results.length - 1
-                    )
+                    randomIntFromInterval(0, pokemonsResponse.length - 1)
                   ]?.image
                 }
                 alt="pokemon left"
@@ -119,10 +116,7 @@ const Pokemons = async ({
               <Image
                 src={
                   pokemonWithImageAndId[
-                    randomIntFromInterval(
-                      0,
-                      pokemonsResponse.results.length - 1
-                    )
+                    randomIntFromInterval(0, pokemonsResponse.length - 1)
                   ]?.image
                 }
                 alt="pokemon right"
@@ -131,7 +125,7 @@ const Pokemons = async ({
               />
             )}
             <h3 className={style.pokemon_numbers}>
-              There are: {pokemonsResponse.results.length} pokemons found!
+              There are: {pokemonsResponse.length} pokemons found!
             </h3>
           </div>
 
@@ -189,15 +183,19 @@ const PokemonsWrapper = async ({
 
   // this is called 2 times simetimes, probably because React 18 strict more
 
-  await setPokemons({
+  const res = setPokemons({
     pokemons: list.results,
     sessionId: sessionId
   });
 
   return (
     <>
-      {/* @ts-expect-error Async Server Component */}
-      <Pokemons searchQuery={searchQuery} nextLink={nextLink} />
+      {res && res?.length > 0 && (
+        <>
+          {/* @ts-expect-error Async Server Component */}
+          <Pokemons searchQuery={searchQuery} nextLink={nextLink} />
+        </>
+      )}
     </>
   );
 };

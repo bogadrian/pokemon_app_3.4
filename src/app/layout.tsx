@@ -1,9 +1,10 @@
-import './globals.css';
 import { Inter } from 'next/font/google';
+import './globals.css';
 
-import { NavigationBar } from '../components/NavigationBar';
-import { AuthProvider } from '@/components/auth/AuthContext';
-import { SetCookie } from '@/components/setCookie';
+import { SearchPokemon } from '@/components/client/SearchPokemon/SearchPokemon';
+import { AuthProvider } from '@/components/client/auth/AuthContext';
+import { SetCookie } from '@/components/client/setCookie';
+import { NavigationBar } from '../components/server/NavigationBar';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -23,7 +24,9 @@ export default function RootLayout({
         <AuthProvider>
           <div style={{ height: '100vh' }}>
             <div style={{ height: '15vh' }}>
-              <NavigationBar />
+              <NavigationBar>
+                <SearchPokemon />
+              </NavigationBar>
             </div>
             <div style={{ marginTop: '-100px' }}>{children}</div>
           </div>

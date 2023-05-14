@@ -1,10 +1,11 @@
-import styles from './navbar.module.css';
-import Image from 'next/image';
-import { NavigationItems } from '../NavigationItems';
-import { SearchPokemon } from '@/components/SearchPokemon';
-import { User } from '../user';
+import 'server-only';
 
-export const NavigationBar = () => {
+import Image from 'next/image';
+import { NavigationItems } from '../../client/NavigationItems';
+import { User } from '../../client/User';
+import styles from './navbar.module.css';
+
+export const NavigationBar = ({ children }: { children: React.ReactNode }) => {
   return (
     <nav className={styles.nav}>
       <div>
@@ -19,9 +20,7 @@ export const NavigationBar = () => {
       <div style={{ width: '30%', marginLeft: '20px' }}>
         <NavigationItems />
       </div>
-      <div style={{ width: '60%', marginLeft: '200px' }}>
-        <SearchPokemon />
-      </div>
+      <div style={{ width: '60%', marginLeft: '200px' }}>{children}</div>
       <div
         style={{
           width: '20%',

@@ -15,7 +15,7 @@ const pokemonRandomName = async () => {
   );
 
   if (!pokemons.ok) {
-    throw new Error('Failed to fetch data');
+    throw new Error('Failed to fetch pokemons data');
   }
 
   const pokemon = await pokemons.json();

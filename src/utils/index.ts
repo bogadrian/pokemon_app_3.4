@@ -8,14 +8,6 @@ export const randomIntFromInterval = (min: number, max: number) => {
 const pokemonsStore = () => {
   const pokemonsList: { [sessionId: string]: Pokemon[] } = { sessionId: [] };
 
-  const pokemonsResponse: {
-    [sessionId: string]: { results: Pokemon[] };
-  } = {
-    sessionId: {
-      results: []
-    }
-  };
-
   const setPokemons = ({
     pokemons,
     sessionId
@@ -52,11 +44,7 @@ const pokemonsStore = () => {
         }
         return 0;
       });
-
-      // // set the pokemonsResponses to the local list of pokemons
-      pokemonsResponse[sessionId] = {
-        results: pokemonsList[sessionId]
-      };
+      return pokemonsList[sessionId];
     }
   };
 
@@ -66,19 +54,18 @@ const pokemonsStore = () => {
   }: {
     searchQuery: string;
     sessionId: string | undefined;
-  }): Promise<{ results: Pokemon[] }> => {
+  }): Promise<Pokemon[]> => {
     return new Promise(resolve => {
       if (sessionId) {
         // if no search query resolve with all the local list
-        const response = {
-          ...pokemonsResponse[sessionId],
-          results: !!searchQuery
+        const response = [
+          ...(pokemonsList[sessionId],
+          !!searchQuery
             ? pokemonsList[sessionId].filter(pok => {
                 return pok.name.includes(searchQuery);
               })
-            : pokemonsList[sessionId]
-        };
-
+            : pokemonsList[sessionId])
+        ];
         resolve(response);
       }
     });

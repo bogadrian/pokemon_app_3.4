@@ -1,9 +1,9 @@
 'use client';
 
-import styles from './form-component.module.css';
-import { FormEvent, useRef, useContext } from 'react';
-import { AuthContext } from '@/components/auth/AuthContext';
+import { AuthContext } from '@/components/client/auth/AuthContext';
 import { useRouter } from 'next/navigation';
+import { FormEvent, useContext, useRef } from 'react';
+import styles from './form-component.module.css';
 
 export const FormComponent = ({ children }: { children: React.ReactNode }) => {
   const refNameOrEmail = useRef<HTMLInputElement>(null);
